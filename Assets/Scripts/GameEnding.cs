@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+enum GameEndingState {
+    Playing,
+    Exit,
+    Caught
+}
+
 public class GameEnding : MonoBehaviour
 {
     /// Amount of time that it takes for the screen to fade out.
@@ -15,30 +21,34 @@ public class GameEnding : MonoBehaviour
     public CanvasGroup exitBackgroundImageCanvasGroup;
     /// The canvas group to fade in when the player is caught
     public CanvasGroup caughtBackgroundImageCanvasGroup;
-    /// True if the player has exited
-    bool m_IsPlayerAtExit = false;
-    /// True if the player has been caught
-    bool m_IsPlayerCaught = false;
+    /// The current game ending state
+    GameEndingState m_State = GameEndingState.Playing;
     /// Timer to keep track of fade time
     float m_Timer = 0f;
+
+    /// Set the game ending state
+    void SetEndingState(GameEndingState state)
+    {
+        m_State = state;
+    }
 
     /// Called when a Collider enters this object's trigger
     void OnTriggerEnter(Collider other)
     {
         // check that collider is the player object
-        if (other.gameObject == player)
+        if (other.gameObject == player && m_State == GameEndingState.Playing)
         {
-            m_IsPlayerAtExit = true;
+            SetEndingState(GameEndingState.Exit);
         }
     }
 
     /// Called every frame
     void FixedUpdate()
     {
-        if (m_IsPlayerAtExit) {
+        if (m_State == GameEndingState.Exit) {
             // if player beat stage, end level and close game
             EndLevel(exitBackgroundImageCanvasGroup, false);
-        } else if (m_IsPlayerCaught) {
+        } else if (m_State == GameEndingState.Caught) {
             // if player is caught, end level and restart level
             EndLevel(caughtBackgroundImageCanvasGroup, true);
         }
@@ -69,6 +79,8 @@ public class GameEnding : MonoBehaviour
     /// that the level should be reset as a result.
     public void CatchPlayer()
     {
-        m_IsPlayerCaught = true;
+        if (m_State == GameEndingState.Playing) {
+            SetEndingState(GameEndingState.Caught);
+        }
     }
 }
