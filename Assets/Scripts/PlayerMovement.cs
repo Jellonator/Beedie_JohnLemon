@@ -30,7 +30,9 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
         // set movement
         m_Movement.Set(horizontal, 0f, vertical);
-        m_Movement.Normalize();
+        if (m_Movement.sqrMagnitude > 1f) {
+            m_Movement.Normalize();
+        }
         // determine if there is any movement
         bool hasInput = !Mathf.Approximately(m_Movement.magnitude, 0f);
         // Set iswalking value in animator
