@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    /// Movement vector
+    Vector3 m_Movement = Vector3.zero;
+
     // Start is called before the first frame update
     void Start()
     {
