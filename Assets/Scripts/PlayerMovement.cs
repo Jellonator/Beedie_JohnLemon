@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 m_Movement = Vector3.zero;
     /// Animator component
     Animator m_Animator;
+    /// Turning speed
+    public float turnSpeed = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -28,5 +30,7 @@ public class PlayerMovement : MonoBehaviour
         bool hasInput = !Mathf.Approximately(m_Movement.magnitude, 0f);
         // Set iswalking value in animator
         m_Animator.SetBool("IsWalking", hasInput);
+        // Determine forward direction
+        Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
     }
 }
