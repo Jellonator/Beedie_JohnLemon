@@ -10,10 +10,14 @@ public class GameEnding : MonoBehaviour
     public float displayImageDuration = 1f;
     /// Reference to the player
     public GameObject player;
-    /// The canvas group to fade
+    /// The canvas group to fade in when the player wins
     public CanvasGroup exitBackgroundImageCanvasGroup;
+    /// The canvas group to fade in when the player is caught
+    public CanvasGroup caughtBackgroundImageCanvasGroup;
     /// True if the player has exited
     bool m_IsPlayerAtExit = false;
+    /// True if the player has been caught
+    bool m_IsPlayerCaught = false;
     /// Timer to keep track of fade time
     float m_Timer = 0f;
 
@@ -31,14 +35,16 @@ public class GameEnding : MonoBehaviour
     void Update()
     {
         if (m_IsPlayerAtExit) {
-            EndLevel();
+            EndLevel(exitBackgroundImageCanvasGroup);
+        } else if (m_IsPlayerCaught) {
+            EndLevel(caughtBackgroundImageCanvasGroup);
         }
     }
 
-    void EndLevel()
+    void EndLevel(CanvasGroup canvasGroup)
     {
         m_Timer += Time.deltaTime;
-        exitBackgroundImageCanvasGroup.alpha = Mathf.Clamp(m_Timer / fadeDuration, 0f, 1f);
+        canvasGroup.alpha = Mathf.Clamp(m_Timer / fadeDuration, 0f, 1f);
         if (m_Timer > fadeDuration + displayImageDuration) {
             Application.Quit();
         }
