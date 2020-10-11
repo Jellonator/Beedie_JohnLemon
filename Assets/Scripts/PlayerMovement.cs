@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody m_Rigidbody;
     /// Player's footstep audiosource
     AudioSource m_AudioFootsteps;
+    /// AudioListener gameobject
+    public GameObject AudioListenerObject;
 
     // Start is called before the first frame update
     void Start()
@@ -62,5 +64,11 @@ public class PlayerMovement : MonoBehaviour
         m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
         // set rotation
         m_Rigidbody.MoveRotation(m_Rotation);
+    }
+
+    void LateUpdate()
+    {
+        // rotate audio listener properly
+        AudioListenerObject.transform.rotation = Quaternion.identity;
     }
 }
