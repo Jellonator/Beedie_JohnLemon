@@ -9,14 +9,23 @@ public class WaypointPatrol : MonoBehaviour
     public NavMeshAgent navMeshAgent;
     /// A list of Transforms to use as waypoints.
     public Transform[] waypoints;
+    /// The current waypoint index
+    int m_CurrentWaypointIndex = 0;
 
     void Start()
     {
-        navMeshAgent.SetDestination(waypoints[0].position);
+        if (waypoints.Length > 0) {
+            navMeshAgent.SetDestination(waypoints[0].position);
+        }
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        
+        if (waypoints.Length > 1) {
+            if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance) {
+                m_CurrentWaypointIndex = (m_CurrentWaypointIndex + 1) % waypoints.Length;
+                navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
+            }
+        }
     }
 }
