@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     /// Movement vector
     Vector3 m_Movement = Vector3.zero;
+    /// Animator component
+    Animator m_Animator;
 
     // Start is called before the first frame update
     void Start()
@@ -22,5 +24,7 @@ public class PlayerMovement : MonoBehaviour
         // set movement
         m_Movement.Set(horizontal, 0f, vertical);
         m_Movement.Normalize();
+        // determine if there is any movement
+        bool hasInput = !Mathf.Approximately(m_Movement.magnitude, 0f);
     }
 }
