@@ -34,7 +34,7 @@ public class Observer : MonoBehaviour
             RaycastHit raycastHit;
             if (Physics.Raycast(ray, out raycastHit)) {
                 if (raycastHit.collider.transform == player) {
-
+                    gameEnding.CatchPlayer();
                 }
             }
         }
