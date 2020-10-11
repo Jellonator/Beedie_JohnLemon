@@ -21,6 +21,10 @@ public class GameEnding : MonoBehaviour
     public CanvasGroup exitBackgroundImageCanvasGroup;
     /// The canvas group to fade in when the player is caught
     public CanvasGroup caughtBackgroundImageCanvasGroup;
+    /// Reference to the exit audio source
+    public AudioSource exitAudio;
+    /// Reference to the caught audio source
+    public AudioSource caughtAudio;
     /// The current game ending state
     GameEndingState m_State = GameEndingState.Playing;
     /// Timer to keep track of fade time
@@ -30,6 +34,13 @@ public class GameEnding : MonoBehaviour
     void SetEndingState(GameEndingState state)
     {
         m_State = state;
+        caughtAudio.Stop();
+        exitAudio.Stop();
+        if (state == GameEndingState.Caught) {
+            caughtAudio.Play();
+        } else if (state == GameEndingState.Exit) {
+            exitAudio.Play();
+        }
     }
 
     /// Called when a Collider enters this object's trigger
