@@ -235,11 +235,11 @@
     <Reference Include="Unity.Analytics.Tracker">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Analytics.StandardEvents">
-        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Analytics.Editor">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.StandardEvents">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
@@ -601,8 +601,17 @@
     <Reference Include="Unity.Timeline.Editor">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Monetization">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/UnityEngine.Monetization.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VSCode.Editor">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
@@ -613,32 +622,14 @@
     <Reference Include="Unity.Timeline">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Rider.Editor">
-        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualStudio.Editor">
-        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Cinemachine">
-        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Monetization">
-        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/UnityEngine.Monetization.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Postprocessing.Editor">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.XR.LegacyInputHelpers">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Rider.Editor">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
@@ -658,11 +649,20 @@
     <Reference Include="UnityEngine.SpatialTracking">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualStudio.Editor">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.XR.LegacyInputHelpers">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
