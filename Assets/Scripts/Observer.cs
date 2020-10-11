@@ -6,6 +6,8 @@ public class Observer : MonoBehaviour
 {
     /// Reference to the player's transform
     public Transform player;
+    /// Reference to the game ending class
+    public GameEnding gameEnding;
     /// True if the player has been detected
     bool m_IsPlayerInRange = false;
 
@@ -21,6 +23,20 @@ public class Observer : MonoBehaviour
     void OnTriggerExit(Collider other) {
         if (other.transform == player) {
             m_IsPlayerInRange = false;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (m_IsPlayerInRange) {
+            Vector3 direction = (player.position + Vector3.up) - transform.position;
+            Ray ray = new Ray(transform.position, direction);
+            RaycastHit raycastHit;
+            if (Physics.Raycast(ray, out raycastHit)) {
+                if (raycastHit.collider.transform == player) {
+
+                }
+            }
         }
     }
 }
