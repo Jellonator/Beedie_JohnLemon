@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameEnding : MonoBehaviour
 {
@@ -35,18 +36,27 @@ public class GameEnding : MonoBehaviour
     void Update()
     {
         if (m_IsPlayerAtExit) {
-            EndLevel(exitBackgroundImageCanvasGroup);
+            EndLevel(exitBackgroundImageCanvasGroup, false);
         } else if (m_IsPlayerCaught) {
-            EndLevel(caughtBackgroundImageCanvasGroup);
+            EndLevel(caughtBackgroundImageCanvasGroup, true);
         }
     }
 
-    void EndLevel(CanvasGroup canvasGroup)
+    void EndLevel(CanvasGroup canvasGroup, bool doRestart)
     {
         m_Timer += Time.deltaTime;
         canvasGroup.alpha = Mathf.Clamp(m_Timer / fadeDuration, 0f, 1f);
         if (m_Timer > fadeDuration + displayImageDuration) {
-            Application.Quit();
+            if (doRestart) {
+                SceneManager.LoadScene(gameObject.scene.buildIndex);
+            } else {
+                Application.Quit();
+            }
         }
+    }
+
+    public void CatchPlayer()
+    {
+        m_IsPlayerCaught = true;
     }
 }
