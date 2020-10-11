@@ -14,6 +14,7 @@ public class WaypointPatrol : MonoBehaviour
 
     void Start()
     {
+        navMeshAgent = GetComponent<NavMeshAgent>();
         if (waypoints.Length > 0) {
             navMeshAgent.SetDestination(waypoints[0].position);
         }

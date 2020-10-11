@@ -4416,6 +4416,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6221394734892398687, guid: 3de25607e356528cb96f2faf0a7b86c9,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 859239542}
+    - target: {fileID: 6221394734892398687, guid: 3de25607e356528cb96f2faf0a7b86c9,
+        type: 3}
+      propertyPath: gameEnding
+      value: 
+      objectReference: {fileID: 1718441159}
     - target: {fileID: 6566980299122114292, guid: 3de25607e356528cb96f2faf0a7b86c9,
         type: 3}
       propertyPath: m_LocalPosition.x
