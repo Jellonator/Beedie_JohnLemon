@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        m_Animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -26,5 +26,7 @@ public class PlayerMovement : MonoBehaviour
         m_Movement.Normalize();
         // determine if there is any movement
         bool hasInput = !Mathf.Approximately(m_Movement.magnitude, 0f);
+        // Set iswalking value in animator
+        m_Animator.SetBool("IsWalking", hasInput);
     }
 }
