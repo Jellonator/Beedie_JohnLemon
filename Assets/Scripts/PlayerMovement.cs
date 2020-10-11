@@ -43,9 +43,12 @@ public class PlayerMovement : MonoBehaviour
         m_Rotation = Quaternion.LookRotation(desiredForward);
     }
 
+    /// Called to move the animation
     void OnAnimatorMove()
     {
+        // move position
         m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
+        // set rotation
         m_Rigidbody.MoveRotation(m_Rotation);
     }
 }

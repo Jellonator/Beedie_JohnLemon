@@ -33,28 +33,40 @@ public class GameEnding : MonoBehaviour
     }
 
     /// Called every frame
-    void Update()
+    void FixedUpdate()
     {
         if (m_IsPlayerAtExit) {
+            // if player beat stage, end level and close game
             EndLevel(exitBackgroundImageCanvasGroup, false);
         } else if (m_IsPlayerCaught) {
+            // if player is caught, end level and restart level
             EndLevel(caughtBackgroundImageCanvasGroup, true);
         }
     }
 
+    /// Level ending function. Call every frame when the level should end.
+    /// CanvasGroup is the canvasgroup to make visible
+    /// doRestart indicates if the level should restart or not.
     void EndLevel(CanvasGroup canvasGroup, bool doRestart)
     {
+        // Increase timer
         m_Timer += Time.deltaTime;
+        // Set the canvasgroup's alpha based on the timer.
         canvasGroup.alpha = Mathf.Clamp(m_Timer / fadeDuration, 0f, 1f);
         if (m_Timer > fadeDuration + displayImageDuration) {
+            // If timer is at end:
             if (doRestart) {
+                // restart level
                 SceneManager.LoadScene(gameObject.scene.buildIndex);
             } else {
+                // quit game
                 Application.Quit();
             }
         }
     }
 
+    /// Call this function to indicate that the player has been caught and
+    /// that the level should be reset as a result.
     public void CatchPlayer()
     {
         m_IsPlayerCaught = true;
