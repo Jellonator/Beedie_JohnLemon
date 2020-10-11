@@ -34,8 +34,10 @@ public class GameEnding : MonoBehaviour
     void SetEndingState(GameEndingState state)
     {
         m_State = state;
+        // stop existing audio (if applicaple)
         caughtAudio.Stop();
         exitAudio.Stop();
+        // play new audio depending on state
         if (state == GameEndingState.Caught) {
             caughtAudio.Play();
         } else if (state == GameEndingState.Exit) {
@@ -46,7 +48,7 @@ public class GameEnding : MonoBehaviour
     /// Called when a Collider enters this object's trigger
     void OnTriggerEnter(Collider other)
     {
-        // check that collider is the player object
+        // check that collider is the player object, and that the state is 'playing'
         if (other.gameObject == player && m_State == GameEndingState.Playing)
         {
             SetEndingState(GameEndingState.Exit);
@@ -91,6 +93,7 @@ public class GameEnding : MonoBehaviour
     public void CatchPlayer()
     {
         if (m_State == GameEndingState.Playing) {
+            // only set if the state is set to 'playing'
             SetEndingState(GameEndingState.Caught);
         }
     }

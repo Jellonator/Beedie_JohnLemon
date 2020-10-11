@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     Quaternion m_Rotation = Quaternion.identity;
     /// Player's Rigidbody component
     Rigidbody m_Rigidbody;
+    /// Player's footstep audiosource
+    AudioSource m_AudioFootsteps;
 
     // Start is called before the first frame update
     void Start()
