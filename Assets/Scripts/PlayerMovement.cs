@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // get components
+        m_AudioFootsteps = GetComponent<AudioSource>();
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody>();
     }
@@ -43,6 +45,14 @@ public class PlayerMovement : MonoBehaviour
         Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
         // Set player's rotation
         m_Rotation = Quaternion.LookRotation(desiredForward);
+        // play footsteps if player is walking
+        if (hasInput) {
+            if (!m_AudioFootsteps.isPlaying) {
+                m_AudioFootsteps.Play();
+            }
+        } else {
+            m_AudioFootsteps.Stop();
+        }
     }
 
     /// Called to move the animation
