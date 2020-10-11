@@ -9,7 +9,9 @@ public class PlayerMovement : MonoBehaviour
     /// Animator component
     Animator m_Animator;
     /// Turning speed
-    public float turnSpeed = 1.0f;
+    public float turnSpeed = 20.0f;
+    /// Player's rotation
+    Quaternion m_Rotation = Quaternion.identity;
 
     // Start is called before the first frame update
     void Start()
@@ -32,5 +34,7 @@ public class PlayerMovement : MonoBehaviour
         m_Animator.SetBool("IsWalking", hasInput);
         // Determine forward direction
         Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
+        // Set player's rotation
+        m_Rotation = Quaternion.LookRotation(desiredForward);
     }
 }
