@@ -44,9 +44,6 @@ public class LemoningController : MonoBehaviour
             m_Rigidbody.MovePosition(m_Rigidbody.position + direction * m_Animator.deltaPosition.magnitude);
             // rotate
             m_Rigidbody.MoveRotation(Quaternion.LookRotation(m_navMeshAgent.velocity.normalized, Vector3.up));
-            // Vector3 target = m_navMeshAgent.destination;
-            // m_navMeshAgent.Warp(m_Rigidbody.position);
-            // m_navMeshAgent.SetDestination(target);
         }
     }
 

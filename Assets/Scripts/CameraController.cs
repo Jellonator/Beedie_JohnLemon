@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CameraController : MonoBehaviour
 {
@@ -65,10 +66,13 @@ public class CameraController : MonoBehaviour
             m_pointerRenderer.enabled = true;
             m_isPointing = true;
             if (Input.GetMouseButtonDown(0)) {
-                GameObject lemonObj = FindNearestLemoning(raycastHit.point);
-                if (lemonObj != null) {
-                    LemoningController lemon = lemonObj.GetComponent<LemoningController>();
-                    lemon.SetFollow(raycastHit.point);
+                NavMeshHit navMeshHit;
+                if (NavMesh.SamplePosition(raycastHit.point, out navMeshHit, 3.0f, NavMesh.AllAreas)) {
+                    GameObject lemonObj = FindNearestLemoning(raycastHit.point);
+                    if (lemonObj != null) {
+                        LemoningController lemon = lemonObj.GetComponent<LemoningController>();
+                        lemon.SetFollow(raycastHit.point);
+                    }
                 }
             }
         } else {
