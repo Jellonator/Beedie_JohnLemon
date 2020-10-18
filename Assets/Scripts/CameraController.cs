@@ -6,22 +6,49 @@ public class CameraController : MonoBehaviour
 {
     public float cameraSpeed = 10.0f;
 
+    public GameObject pointer;
+
+    private Camera m_camera;
+
+    private MeshRenderer m_pointerRenderer;
+
+    private bool m_isPointing = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        m_camera = GetComponent<Camera>();
+        m_pointerRenderer = pointer.GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        // movement (basically copied from old PlayerMovement)
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-
         Vector3 movement = new Vector3(horizontal, 0f, vertical);
         if (movement.sqrMagnitude > 1f) {
             movement.Normalize();
         }
         transform.position += movement * Time.deltaTime * cameraSpeed;
+        // Raycast to find solid
+        Vector2 mouseScreenPos = Input.mousePosition;
+        Vector3 mouseWorldPos = m_camera.ScreenToWorldPoint(
+            new Vector3(mouseScreenPos.x, mouseScreenPos.y, 1000.0f)
+        );
+        // Vector3 direction = transform.forward;
+        Ray ray = new Ray(transform.position, mouseWorldPos-transform.position);
+        RaycastHit raycastHit;
+        if (Physics.Raycast(ray, out raycastHit)) {
+            pointer.transform.position = raycastHit.point;
+            Vector3 fakeUp = Vector3.Cross(raycastHit.normal, transform.right);
+            pointer.transform.LookAt(pointer.transform.position + raycastHit.normal, fakeUp);
+            m_pointerRenderer.enabled = true;
+            m_isPointing = true;
+        } else {
+            m_pointerRenderer.enabled = false;
+            m_isPointing = false;
+        }
     }
 }
