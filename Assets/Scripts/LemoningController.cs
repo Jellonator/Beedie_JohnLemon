@@ -35,15 +35,18 @@ public class LemoningController : MonoBehaviour
 
     void OnAnimatorMove()
     {
-        if (!m_navMeshAgent.isStopped) {
+        if (m_navMeshAgent.remainingDistance > m_navMeshAgent.stoppingDistance) {
             // get direction to move in
-            Vector3 direction = m_navMeshAgent.nextPosition - transform.position;
+            Vector3 direction = m_navMeshAgent.nextPosition - m_Animator.rootPosition;
             direction.y = 0.0f;
             direction.Normalize();
             // move
             m_Rigidbody.MovePosition(m_Rigidbody.position + direction * m_Animator.deltaPosition.magnitude);
             // rotate
-            m_Rigidbody.MoveRotation(Quaternion.LookRotation(direction, Vector3.up));
+            m_Rigidbody.MoveRotation(Quaternion.LookRotation(m_navMeshAgent.velocity.normalized, Vector3.up));
+            // Vector3 target = m_navMeshAgent.destination;
+            // m_navMeshAgent.Warp(m_Rigidbody.position);
+            // m_navMeshAgent.SetDestination(target);
         }
     }
 
