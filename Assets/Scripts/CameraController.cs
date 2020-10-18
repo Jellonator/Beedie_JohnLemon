@@ -45,6 +45,13 @@ public class CameraController : MonoBehaviour
             LemoningController lemon = lemonObj.GetComponent<LemoningController>();
             lemon.SetDestination(target);
             lemonings.Remove(lemonObj);
+            while (lemonings.Count > 0) {
+                GameObject next = FindNearestLemoning(lemonings, lemonObj.transform.position);
+                LemoningController nextLemon = next.GetComponent<LemoningController>();
+                nextLemon.SetFollow(lemonObj);
+                lemonObj = next;
+                lemonings.Remove(lemonObj);
+            }
         }
     }
 
@@ -58,24 +65,26 @@ public class CameraController : MonoBehaviour
         if (movement.sqrMagnitude > 1f) {
             movement.Normalize();
         }
+        // apply movement
         transform.position += movement * Time.deltaTime * cameraSpeed;
-        // Raycast to find solid
+        // Create ray based on mouse position in 3d space
         Vector2 mouseScreenPos = Input.mousePosition;
         Vector3 mouseWorldPos = m_camera.ScreenToWorldPoint(
             new Vector3(mouseScreenPos.x, mouseScreenPos.y, 1000.0f)
         );
-        // Vector3 direction = transform.forward;
         Ray ray = new Ray(transform.position, mouseWorldPos-transform.position);
+        // Perform raycast to find a solid object
         RaycastHit raycastHit;
         if (Physics.Raycast(ray, out raycastHit)) {
+            // if an object was hit, then show a sphere where the raycast hit
             pointer.transform.position = raycastHit.point;
-            Vector3 fakeUp = Vector3.Cross(raycastHit.normal, transform.right);
-            pointer.transform.LookAt(pointer.transform.position + raycastHit.normal, fakeUp);
             m_pointerRenderer.enabled = true;
             m_isPointing = true;
             if (Input.GetMouseButtonDown(0)) {
+                // If player clicked, then find nearest point on navmesh
                 NavMeshHit navMeshHit;
                 if (NavMesh.SamplePosition(raycastHit.point, out navMeshHit, 3.0f, NavMesh.AllAreas)) {
+                    // if there was a nearby point on the navmesh, then make Lemonings follow the path
                     GameObject[] ls = GameObject.FindGameObjectsWithTag("Lemoning");
                     HashSet<GameObject> lemonings = new HashSet<GameObject>(ls);
                     ProcessFollowerChain(lemonings, navMeshHit.position);
