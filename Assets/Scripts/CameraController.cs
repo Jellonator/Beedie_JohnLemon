@@ -65,7 +65,11 @@ public class CameraController : MonoBehaviour
             m_pointerRenderer.enabled = true;
             m_isPointing = true;
             if (Input.GetMouseButtonDown(0)) {
-                
+                GameObject lemonObj = FindNearestLemoning(raycastHit.point);
+                if (lemonObj != null) {
+                    LemoningController lemon = lemonObj.GetComponent<LemoningController>();
+                    
+                }
             }
         } else {
             m_pointerRenderer.enabled = false;
