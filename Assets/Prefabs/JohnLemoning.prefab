@@ -1187,6 +1187,7 @@ GameObject:
   - component: {fileID: 6679421467749238365}
   - component: {fileID: 164124513592326512}
   - component: {fileID: 6442448771254265417}
+  - component: {fileID: 5504896577525591469}
   m_Layer: 0
   m_Name: JohnLemoning
   m_TagString: Lemoning
@@ -1379,10 +1380,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.41
-  m_Speed: 3.5
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 180
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -1391,6 +1392,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
+--- !u!114 &5504896577525591469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3944815771505038847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf7238c9d23039a1b616c48f399c526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6773052923205589867
 GameObject:
   m_ObjectHideFlags: 0

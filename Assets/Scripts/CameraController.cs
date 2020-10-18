@@ -68,7 +68,7 @@ public class CameraController : MonoBehaviour
                 GameObject lemonObj = FindNearestLemoning(raycastHit.point);
                 if (lemonObj != null) {
                     LemoningController lemon = lemonObj.GetComponent<LemoningController>();
-                    
+                    lemon.SetFollow(raycastHit.point);
                 }
             }
         } else {
