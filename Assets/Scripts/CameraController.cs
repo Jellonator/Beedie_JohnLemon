@@ -40,18 +40,25 @@ public class CameraController : MonoBehaviour
 
     private void ProcessFollowerChain(HashSet<GameObject> lemonings, Vector3 target)
     {
-        GameObject lemonObj = FindNearestLemoning(lemonings, target);
-        if (lemonObj != null) {
+        HashSet<GameObject> leaders = new HashSet<GameObject>();
+        // Nearest lemon will follow cursor
+        if (lemonings.Count > 0) {
+            GameObject lemonObj = FindNearestLemoning(lemonings, target);
             LemoningController lemon = lemonObj.GetComponent<LemoningController>();
             lemon.SetDestination(target);
             lemonings.Remove(lemonObj);
-            while (lemonings.Count > 0) {
-                GameObject next = FindNearestLemoning(lemonings, lemonObj.transform.position);
-                LemoningController nextLemon = next.GetComponent<LemoningController>();
-                nextLemon.SetFollow(lemonObj);
-                lemonObj = next;
-                lemonings.Remove(lemonObj);
-            }
+            leaders.Add(lemonObj);
+        }
+        while (lemonings.Count > 0) {
+            // get next nearest lemon
+            GameObject lemonObj = FindNearestLemoning(lemonings, target);
+            // Find potential leader (one closest to this lemon)
+            GameObject leaderObj = FindNearestLemoning(leaders,lemonObj.transform.position);
+            // Set lemon to follow
+            LemoningController lemon = lemonObj.GetComponent<LemoningController>();
+            lemon.SetFollow(leaderObj);
+            lemonings.Remove(lemonObj);
+            leaders.Add(lemonObj);
         }
     }
 
