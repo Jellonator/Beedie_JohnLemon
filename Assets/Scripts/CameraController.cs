@@ -21,6 +21,24 @@ public class CameraController : MonoBehaviour
         m_pointerRenderer = pointer.GetComponent<MeshRenderer>();
     }
 
+    private GameObject FindNearestLemoning(Vector3 pos) {
+        GameObject[] ls = GameObject.FindGameObjectsWithTag("Lemoning");
+        if (ls.Length == 0) {
+            return null;
+        }
+        GameObject current = ls[0];
+        float distance = Vector3.Distance(pos, current.transform.position);
+        for (int i = 1; i < ls.Length; i++) {
+            GameObject next = ls[i];
+            float nextDistance = Vector3.Distance(pos, next.transform.position);
+            if (nextDistance < distance) {
+                distance = nextDistance;
+                current = next;
+            }
+        }
+        return current;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -46,6 +64,9 @@ public class CameraController : MonoBehaviour
             pointer.transform.LookAt(pointer.transform.position + raycastHit.normal, fakeUp);
             m_pointerRenderer.enabled = true;
             m_isPointing = true;
+            if (Input.GetMouseButtonDown(0)) {
+                
+            }
         } else {
             m_pointerRenderer.enabled = false;
             m_isPointing = false;
