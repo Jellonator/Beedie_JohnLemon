@@ -36,12 +36,13 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\GameEnding.cs" />
+     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+     <Compile Include="Assets\Scripts\WaypointPatrol.cs" />
      <Compile Include="Assets\Scripts\LightFlicker.cs" />
      <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-     <Compile Include="Assets\Scripts\GameEnding.cs" />
      <Compile Include="Assets\Scripts\Observer.cs" />
-     <Compile Include="Assets\Scripts\WaypointPatrol.cs" />
+     <Compile Include="Assets\Scripts\CameraController.cs" />
      <None Include="Assets\3DBeginner_Third-PartyNotice.txt" />
      <None Include="Assets\Shaders\ToonShader.shader" />
      <None Include="Assets\Shaders\SpookyStandardShader.shader" />
@@ -648,6 +649,18 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.ProBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.Editor">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.ProBuilder.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.AddOns.Editor">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
