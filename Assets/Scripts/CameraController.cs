@@ -22,22 +22,30 @@ public class CameraController : MonoBehaviour
         m_pointerRenderer = pointer.GetComponent<MeshRenderer>();
     }
 
-    private GameObject FindNearestLemoning(Vector3 pos) {
-        GameObject[] ls = GameObject.FindGameObjectsWithTag("Lemoning");
-        if (ls.Length == 0) {
+    private GameObject FindNearestLemoning(HashSet<GameObject> lemonings, Vector3 pos) {
+        if (lemonings.Count == 0) {
             return null;
         }
-        GameObject current = ls[0];
-        float distance = Vector3.Distance(pos, current.transform.position);
-        for (int i = 1; i < ls.Length; i++) {
-            GameObject next = ls[i];
+        GameObject current = null;
+        float distance = 0.0f;
+        foreach (GameObject next in lemonings) {
             float nextDistance = Vector3.Distance(pos, next.transform.position);
-            if (nextDistance < distance) {
+            if (current == null || nextDistance < distance) {
                 distance = nextDistance;
                 current = next;
             }
         }
         return current;
+    }
+
+    private void ProcessFollowerChain(HashSet<GameObject> lemonings, Vector3 target)
+    {
+        GameObject lemonObj = FindNearestLemoning(lemonings, target);
+        if (lemonObj != null) {
+            LemoningController lemon = lemonObj.GetComponent<LemoningController>();
+            lemon.SetDestination(target);
+            lemonings.Remove(lemonObj);
+        }
     }
 
     // Update is called once per frame
@@ -68,11 +76,9 @@ public class CameraController : MonoBehaviour
             if (Input.GetMouseButtonDown(0)) {
                 NavMeshHit navMeshHit;
                 if (NavMesh.SamplePosition(raycastHit.point, out navMeshHit, 3.0f, NavMesh.AllAreas)) {
-                    GameObject lemonObj = FindNearestLemoning(raycastHit.point);
-                    if (lemonObj != null) {
-                        LemoningController lemon = lemonObj.GetComponent<LemoningController>();
-                        lemon.SetFollow(raycastHit.point);
-                    }
+                    GameObject[] ls = GameObject.FindGameObjectsWithTag("Lemoning");
+                    HashSet<GameObject> lemonings = new HashSet<GameObject>(ls);
+                    ProcessFollowerChain(lemonings, navMeshHit.position);
                 }
             }
         } else {

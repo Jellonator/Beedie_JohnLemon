@@ -47,10 +47,16 @@ public class LemoningController : MonoBehaviour
         }
     }
 
-    // Tell controller to follow a target
-    public void SetFollow(Vector3 target)
+    // Tell controller to go to a destination
+    public void SetDestination(Vector3 target)
     {
         m_navMeshAgent.SetDestination(target);
         m_Animator.SetBool("IsWalking", true);
+    }
+
+    // Tell controller to follow another lemoning
+    public void SetFollow(GameObject target)
+    {
+
     }
 }
