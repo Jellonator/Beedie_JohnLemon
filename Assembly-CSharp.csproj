@@ -40,10 +40,11 @@
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\WaypointPatrol.cs" />
      <Compile Include="Assets\Scripts\LightFlicker.cs" />
+     <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
      <Compile Include="Assets\Scripts\Observer.cs" />
-     <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\LemoningController.cs" />
+     <Compile Include="Assets\Scripts\LemoningWander.cs" />
      <None Include="Assets\3DBeginner_Third-PartyNotice.txt" />
      <None Include="Assets\Shaders\ToonShader.shader" />
      <None Include="Assets\Shaders\SpookyStandardShader.shader" />
@@ -597,8 +598,17 @@
     <Reference Include="Unity.VSCode.Editor">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.ProBuilder">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.ProBuilder.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Advertisements">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.Editor">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.ProBuilder.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
@@ -639,6 +649,9 @@
     <Reference Include="Unity.VisualStudio.Editor">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.ProBuilder.AddOns.Editor">
+        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
@@ -650,18 +663,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
         <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ProBuilder">
-        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.ProBuilder.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ProBuilder.Editor">
-        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.ProBuilder.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
-        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ProBuilder.AddOns.Editor">
-        <HintPath>/home/jellonator/Workspace/Unity/Beedie_JohnLemon/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

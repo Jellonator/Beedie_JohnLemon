@@ -1186,6 +1186,7 @@ GameObject:
   - component: {fileID: 7341735131349060212}
   - component: {fileID: 6679421467749238365}
   - component: {fileID: 5504896577525591469}
+  - component: {fileID: 775395368181184505}
   m_Layer: 0
   m_Name: JohnLemoning
   m_TagString: Lemoning
@@ -1369,3 +1370,20 @@ MonoBehaviour:
   giveUpTime: 0.25
   stoppingDistanceTarget: 0.2
   stoppingDistanceFollowing: 1
+--- !u!114 &775395368181184505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3944815771505038847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833182bb182ec89909da627da6751fb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimumMoveDistance: 1
+  maximumMoveDistance: 2.5
+  moveAttempts: 3
+  minimumTimer: 3
+  maximumTimer: 10
