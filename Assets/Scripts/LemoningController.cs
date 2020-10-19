@@ -5,6 +5,14 @@ using UnityEngine.AI;
 
 public class LemoningController : MonoBehaviour
 {
+    /// Amount of time to wait before the controller gives up on path finding
+    public float giveUpTime = 0.25f;
+    /// Stopping distance when moving to target
+    public float stoppingDistanceTarget = 0.2f;
+    /// Stopping distance when following another controller
+    public float stoppingDistanceFollowing = 1.0f;
+    /// Obstacle reference
+    private NavMeshObstacle m_Obstacle;
     /// Reference to Animator component
     private Animator m_Animator;
     /// Reference to RigidBody component
@@ -16,11 +24,15 @@ public class LemoningController : MonoBehaviour
     /// Actual path that the character will attempt to follow
     private NavMeshPath m_path;
     /// The index of the corner that the character will try to follow next
-    private int m_path_index = 0;
+    private int m_pathIndex = 0;
     /// True if the player is currently following the path
-    private bool m_path_following = false;
+    private bool m_isPathFinding = false;
     /// Amount of distance to stop for
-    private float m_stopping_distance = 0.0f;
+    private float m_stoppingDistance = 0.0f;
+    /// Amount of time that the player has been unable to move for
+    private float m_stoppedTime = 0.0f;
+    /// Previous position
+    private Vector3 m_previousPosition = Vector3.zero;
 
     void Start()
     {
@@ -33,12 +45,15 @@ public class LemoningController : MonoBehaviour
 
     /// Get the total distance that the player will have to travel to complete its path
     private float GetRemainingPathDistance() {
-        if (!m_path_following) {
+        if (!m_isPathFinding) {
+            // No remaining distance if not following a path
             return 0.0f;
         }
         float sum = 0.0f;
+        // Start with controller position
         Vector3 pos = transform.position;
-        for (int i = m_path_index; i < m_path.corners.Length; i++) {
+        for (int i = m_pathIndex; i < m_path.corners.Length; i++) {
+            // Add distance between previous point and next point
             sum += Vector3.Distance(pos, m_path.corners[i]);
             pos = m_path.corners[i];
         }
@@ -51,7 +66,7 @@ public class LemoningController : MonoBehaviour
         if (m_isFollowing) {
             return true;
         } else {
-            return m_path_following;
+            return m_isPathFinding;
         }
     }
 
@@ -59,72 +74,101 @@ public class LemoningController : MonoBehaviour
     {
         if (m_isFollowing) {
             // Try to pathfind to the character that they are following
-            NavMesh.CalculatePath(transform.position, m_following.transform.position, NavMesh.AllAreas, m_path);
-            m_path_index = 0;
-            m_path_following = true;
+            CalculatePathTo(m_following.transform.position);
         }
-        if (GetRemainingPathDistance() <= m_stopping_distance) {
+        if (GetRemainingPathDistance() <= m_stoppingDistance) {
             // If player should stop, then try to stop.
             if (m_isFollowing) {
                 // only stop if the followed character is no longer moving
                 if (!m_following.GetComponent<LemoningController>().IsMoving()) {
-                    m_isFollowing = false;
-                    m_path_following = false;
+                    Stop();
                 }
             } else {
-                m_path_following = false;
+                Stop();
             }
         }
-        // Player is walking if they are following a path and there is still some distance to cover
-        m_Animator.SetBool("IsWalking", m_path_following && GetRemainingPathDistance() > m_stopping_distance);
+        // Increase stop timer
+        m_stoppedTime += Time.deltaTime;
+        // Reset stop timer if player moved a little bit last frame
+        if (Vector3.Distance(m_previousPosition, m_Rigidbody.position) > Time.deltaTime * 0.1f) {
+            m_stoppedTime = 0.0f;
+        }
+        m_previousPosition = m_Rigidbody.position;
+        // Stop controller if they have been stopped for longer than one second
+        if (m_stoppedTime >= giveUpTime) {
+            Stop();
+        }
+        // Player is walking if they are following a path
+        m_Animator.SetBool("IsWalking", m_isPathFinding);
     }
 
     void OnAnimatorMove()
     {
-        if (m_path_following) {
+        if (m_isPathFinding) {
             // Determine the amount of distance to cover.
             // Add a little extra beyond the stopping distance so that the player can cross into
             // the stopping zone.
-            float remaining = m_Animator.deltaPosition.magnitude;
-            remaining = Mathf.Min(remaining, 1e-2f + GetRemainingPathDistance() - m_stopping_distance);
+            float moveSpeed = m_Animator.deltaPosition.magnitude;
+            float remaining = moveSpeed;
+            remaining = Mathf.Min(remaining, 1e-2f + GetRemainingPathDistance() - m_stoppingDistance);
+            // Some extra book-keeping info
             bool did_move = false;
             Vector3 initialPosition = m_Rigidbody.position;
             // Try to move the player to the next corner in the path.
             // If the player succeeds, then reduce 'remaining' and try it again
-            while (m_path_index < m_path.corners.Length && remaining > 0.0f) {
+            while (m_pathIndex < m_path.corners.Length && remaining > 0.0f) {
                 did_move = true;
                 Vector3 current = m_Rigidbody.position;
-                Vector3 next = m_path.corners[m_path_index];
+                Vector3 next = m_path.corners[m_pathIndex];
+                next.y = current.y;
                 float distance = Vector3.Distance(current, next);
                 if (distance <= remaining) {
                     // if the player can move the full distance to this corner, then just move the player to the corner.
-                    m_path_index += 1;
+                    m_pathIndex += 1;
                     remaining -= distance;
                     m_Rigidbody.MovePosition(next);
                 } else {
                     // interpolate the player to the next corner based on 'remaining'
-                    m_Rigidbody.MovePosition(m_Rigidbody.position + (next - current) * (remaining / distance));
+                    Vector3 amount = (next - current) * (remaining / distance);
+                    m_Rigidbody.MovePosition(m_Rigidbody.position + amount);
                     remaining = 0.0f;
                 }
             }
             if (did_move) {
                 Vector3 diff = m_Rigidbody.position - initialPosition;
-                if (diff.magnitude > 1e-2) {
+                diff.y = 0.0f;
+                // Check that player moved at least 5% of the amount of their movement speed.
+                float epsilon = 0.05f * moveSpeed;
+                if (diff.magnitude > epsilon) {
                     // if the player did move, then rotate the player
-                    m_Rigidbody.MoveRotation(Quaternion.LookRotation(diff.normalized, Vector3.up));
+                    m_Rigidbody.MoveRotation(Quaternion.LookRotation(diff.normalized));
                 }
             } 
         }
     }
 
+    /// Tell the controller to path to the given target
+    private void CalculatePathTo(Vector3 target)
+    {
+        NavMesh.CalculatePath(transform.position, target, NavMesh.AllAreas, m_path);
+        m_isPathFinding = true;
+        m_pathIndex = 0;
+        m_stoppedTime = 0.0f;
+    }
+
+    /// Stop path finding completely
+    public void Stop()
+    {
+        m_isPathFinding = false;
+        m_isFollowing = false;
+    }
+
     /// Tell controller to go to a destination
     public void SetDestination(Vector3 target)
     {
-        m_path_index = 0;
-        NavMesh.CalculatePath(transform.position, target, NavMesh.AllAreas, m_path);
+        CalculatePathTo(target);
         m_isFollowing = false;
-        m_stopping_distance = 0.2f;
-        m_path_following = true;
+        m_stoppingDistance = stoppingDistanceTarget;
     }
 
     /// Tell controller to follow another lemoning
@@ -132,6 +176,7 @@ public class LemoningController : MonoBehaviour
     {
         m_following = target;
         m_isFollowing = true;
-        m_stopping_distance = 1.0f;
+        m_stoppingDistance = stoppingDistanceFollowing;
+        m_stoppedTime = 0.0f;
     }
 }

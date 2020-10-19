@@ -5,15 +5,14 @@ using UnityEngine.AI;
 
 public class CameraController : MonoBehaviour
 {
+    /// The speed at which to move this camera
     public float cameraSpeed = 10.0f;
-
+    /// An object to use as a pointer
     public GameObject pointer;
-
+    /// The Camera component
     private Camera m_camera;
-
+    /// MeshRenderer component of 'pointer'
     private MeshRenderer m_pointerRenderer;
-
-    private bool m_isPointing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,13 +21,17 @@ public class CameraController : MonoBehaviour
         m_pointerRenderer = pointer.GetComponent<MeshRenderer>();
     }
 
+    /// Find the Lemoning in the given set that is closest to 'pos'
     private GameObject FindNearestLemoning(HashSet<GameObject> lemonings, Vector3 pos) {
         if (lemonings.Count == 0) {
+            // No lemonings, return null
             return null;
         }
+        // default to null
         GameObject current = null;
         float distance = 0.0f;
         foreach (GameObject next in lemonings) {
+            // Compare distances to see which is closer
             float nextDistance = Vector3.Distance(pos, next.transform.position);
             if (current == null || nextDistance < distance) {
                 distance = nextDistance;
@@ -86,7 +89,6 @@ public class CameraController : MonoBehaviour
             // if an object was hit, then show a sphere where the raycast hit
             pointer.transform.position = raycastHit.point;
             m_pointerRenderer.enabled = true;
-            m_isPointing = true;
             if (Input.GetMouseButtonDown(0)) {
                 // If player clicked, then find nearest point on navmesh
                 NavMeshHit navMeshHit;
@@ -99,7 +101,6 @@ public class CameraController : MonoBehaviour
             }
         } else {
             m_pointerRenderer.enabled = false;
-            m_isPointing = false;
         }
     }
 }
