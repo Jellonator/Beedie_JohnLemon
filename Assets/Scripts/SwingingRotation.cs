@@ -12,7 +12,7 @@ public class SwingingRotation : MonoBehaviour
     public float minimumRotation = -90.0f;
     /// Maximum rotation
     public float maximumRotation = 90.0f;
-    /// Initial rotation (range 0 to 1)
+    /// Initial rotation (range 0 to 1; 0/1 start at min, while 0.5 starts at max)
     public float startPosition = 0.0f;
     /// Timer used to track rotation
     float m_timer = 0.0f;
@@ -22,7 +22,7 @@ public class SwingingRotation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_timer = startPosition;
+        m_timer = startPosition * 2.0f;
         m_originalRotation = transform.rotation;
     }
 
