@@ -46,6 +46,7 @@
      <Compile Include="Assets\Scripts\Observer.cs" />
      <Compile Include="Assets\Scripts\LemoningController.cs" />
      <Compile Include="Assets\Scripts\ContinuousRotation.cs" />
+     <Compile Include="Assets\Scripts\SwingingRotation.cs" />
      <None Include="Assets\3DBeginner_Third-PartyNotice.txt" />
      <None Include="Assets\Shaders\ToonShader.shader" />
      <None Include="Assets\Shaders\SpookyStandardShader.shader" />
