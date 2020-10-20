@@ -12,6 +12,8 @@ public class SwingingRotation : MonoBehaviour
     public float minimumRotation = -90.0f;
     /// Maximum rotation
     public float maximumRotation = 90.0f;
+    /// Initial rotation (range 0 to 1)
+    public float startPosition = 0.0f;
     /// Timer used to track rotation
     float m_timer = 0.0f;
     // original rotation
@@ -20,6 +22,7 @@ public class SwingingRotation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_timer = startPosition;
         m_originalRotation = transform.rotation;
     }
 
@@ -31,9 +34,12 @@ public class SwingingRotation : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // Increase timer
         m_timer += Time.deltaTime / swingTime;
+        // Determine time in rotation cycle (0 = min, 1 = max)
         float x = EaseInOutSine(Mathf.PingPong(m_timer, 1.0f));
         float rotation = x * maximumRotation + (1.0f - x) * minimumRotation;
+        // Apply rotation
         transform.rotation = m_originalRotation;
         transform.RotateAround(transform.position, swingAxis, rotation);
     }
