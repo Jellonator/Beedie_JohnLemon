@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 enum GameEndingState {
     Playing,
@@ -16,7 +17,7 @@ public class GameEnding : MonoBehaviour
     /// Amount of time that the image should be displayed
     public float displayImageDuration = 1f;
     /// Reference to the player
-    public GameObject player;
+    // public GameObject player;
     /// The canvas group to fade in when the player wins
     public CanvasGroup exitBackgroundImageCanvasGroup;
     /// The canvas group to fade in when the player is caught
@@ -25,10 +26,23 @@ public class GameEnding : MonoBehaviour
     public AudioSource exitAudio;
     /// Reference to the caught audio source
     public AudioSource caughtAudio;
+    /// Reference to score text
+    public Text scoreText;
     /// The current game ending state
     GameEndingState m_State = GameEndingState.Playing;
     /// Timer to keep track of fade time
     float m_Timer = 0f;
+    /// Number of Lemonings in the scene
+    int m_totalLemonings = 0;
+    /// Number of found lemonings
+    HashSet<GameObject> m_foundLemonings;
+
+    void Start()
+    {
+        m_foundLemonings = new HashSet<GameObject>();
+        m_totalLemonings = GameObject.FindGameObjectsWithTag("Lemoning").Length;
+        UpdateScoreText();
+    }
 
     /// Set the game ending state
     void SetEndingState(GameEndingState state)
@@ -45,13 +59,23 @@ public class GameEnding : MonoBehaviour
         }
     }
 
+    int GetScore()
+    {
+        return m_foundLemonings.Count;
+    }
+
+    void UpdateScoreText()
+    {
+        scoreText.text = "Score: " + GetScore() + "/" + m_totalLemonings;
+    }
+
     /// Called when a Collider enters this object's trigger
     void OnTriggerEnter(Collider other)
     {
-        // check that collider is the player object, and that the state is 'playing'
-        if (other.gameObject == player && m_State == GameEndingState.Playing)
-        {
-            SetEndingState(GameEndingState.Exit);
+        // check that collider is a lemoning and has not yet been found
+        if (other.tag == "Lemoning" && !m_foundLemonings.Contains(other.gameObject)) {
+            m_foundLemonings.Add(other.gameObject);
+            UpdateScoreText();
         }
     }
 
