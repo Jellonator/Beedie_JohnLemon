@@ -66,7 +66,7 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         // movement (basically copied from old PlayerMovement)
         float horizontal = Input.GetAxis("Horizontal");
