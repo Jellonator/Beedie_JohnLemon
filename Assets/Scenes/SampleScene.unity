@@ -13545,6 +13545,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2053172949}
   - component: {fileID: 2053172948}
+  - component: {fileID: 2053172950}
   m_Layer: 0
   m_Name: KillPlane
   m_TagString: Untagged
@@ -13560,7 +13561,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2053172947}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 10000, y: 49.472523, z: 10000}
@@ -13579,6 +13580,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2053172950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053172947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a888e37c241f6d59ba32e7c432b3ff21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEnding: {fileID: 1718441159}
 --- !u!43 &2066972423
 Mesh:
   m_ObjectHideFlags: 0

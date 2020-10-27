@@ -48,6 +48,7 @@
      <Compile Include="Assets\Scripts\Observer.cs" />
      <Compile Include="Assets\Scripts\LemoningController.cs" />
      <Compile Include="Assets\Scripts\InstructionHider.cs" />
+     <Compile Include="Assets\Scripts\KillPlane.cs" />
      <None Include="Assets\3DBeginner_Third-PartyNotice.txt" />
      <None Include="Assets\Shaders\ToonShader.shader" />
      <None Include="Assets\Shaders\SpookyStandardShader.shader" />
