@@ -36,11 +36,14 @@ public class GameEnding : MonoBehaviour
     int m_totalLemonings = 0;
     /// Number of found lemonings
     HashSet<GameObject> m_foundLemonings;
+    /// Number of remaining lemonings
+    int m_remainingLemonings = 0;
 
     void Start()
     {
         m_foundLemonings = new HashSet<GameObject>();
         m_totalLemonings = GameObject.FindGameObjectsWithTag("Lemoning").Length;
+        m_remainingLemonings = m_totalLemonings;
         UpdateScoreText();
     }
 
@@ -72,10 +75,15 @@ public class GameEnding : MonoBehaviour
     /// Called when a Collider enters this object's trigger
     void OnTriggerEnter(Collider other)
     {
-        // check that collider is a lemoning and has not yet been found
-        if (other.tag == "Lemoning" && !m_foundLemonings.Contains(other.gameObject)) {
-            m_foundLemonings.Add(other.gameObject);
-            UpdateScoreText();
+        if (m_State == GameEndingState.Playing) {
+            // check that collider is a lemoning and has not yet been found
+            if (other.tag == "Lemoning" && !m_foundLemonings.Contains(other.gameObject)) {
+                m_foundLemonings.Add(other.gameObject);
+                UpdateScoreText();
+                if (GetScore() >= m_remainingLemonings) {
+                    SetEndingState(GameEndingState.Exit);
+                }
+            }
         }
     }
 
@@ -112,13 +120,15 @@ public class GameEnding : MonoBehaviour
         }
     }
 
-    /// Call this function to indicate that the player has been caught and
-    /// that the level should be reset as a result.
-    public void CatchPlayer()
+    /// Call this function to indicate that a player has fallen off of the stage.
+    public void DropPlayer()
     {
         if (m_State == GameEndingState.Playing) {
-            // only set if the state is set to 'playing'
-            SetEndingState(GameEndingState.Caught);
+            m_remainingLemonings -= 1;
+            UpdateScoreText();
+            if (m_remainingLemonings <= 0) {
+                SetEndingState(GameEndingState.Caught);
+            }
         }
     }
 }
