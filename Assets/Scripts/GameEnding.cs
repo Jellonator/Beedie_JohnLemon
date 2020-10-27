@@ -69,7 +69,11 @@ public class GameEnding : MonoBehaviour
 
     void UpdateScoreText()
     {
-        scoreText.text = "Score: " + GetScore() + "/" + m_totalLemonings;
+        if (m_totalLemonings > m_remainingLemonings) {
+            scoreText.text = "Score: " + GetScore() + "/" + m_totalLemonings + " (" + m_remainingLemonings + " remaining)";
+        } else {
+            scoreText.text = "Score: " + GetScore() + "/" + m_totalLemonings;
+        }
     }
 
     /// Called when a Collider enters this object's trigger
